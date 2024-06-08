@@ -1,0 +1,21 @@
+services:
+  bot:
+    restart: always
+    build: .
+    environment:
+      BOT_TOKEN:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    volumes:
+      - ./logs/:/app/logs
+
+  redis:
+    image: redis:5-alpine
+    restart: on-failure
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
